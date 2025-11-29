@@ -2,6 +2,7 @@
 class Person
 {
 private:
+	static const unsigned short DEFAULT_AGE = 18;
 	char* name; //покажчик на рядок
 	unsigned short age;//екземплярне поле
 	static int count; //статичне поле - належить класу

@@ -16,14 +16,14 @@ void Person::copy(char* n)
 	}
 }
 
-Person::Person(char* n,unsigned short age) :age{age>110?0:age}
+Person::Person(char* n,unsigned short age) :age{age}
 {
 	count++;
 	copy(n);
 	
 }
 
-Person::Person():Person(nullptr, 18)
+Person::Person():Person(nullptr, DEFAULT_AGE)
 {
 }
 
@@ -31,7 +31,7 @@ Person::Person(unsigned short a):Person(nullptr, a)
 {
 }
 
-Person::Person(char* n):Person(n,18)
+Person::Person(char* n):Person(n,DEFAULT_AGE)
 {
 }
 
