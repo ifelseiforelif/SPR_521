@@ -8,8 +8,13 @@ private:
 	void copy(char* n);
 public:
 	Person(char* n, unsigned short age);
+	Person();
+	Person(unsigned short a);
+	Person(char* n);
+	
 	Person(const Person& obj);
 	void setName(char* n);
+	unsigned short getAge() const;
 	static int getCount(); //належить класу
 	~Person();
 };

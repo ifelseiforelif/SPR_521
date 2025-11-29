@@ -2,7 +2,7 @@
 #include <iostream>
 using namespace std;
 #include "Person.h"
-
+//Делегування конструкторів
 
 
 int main()
