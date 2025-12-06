@@ -1,7 +1,108 @@
 ﻿#include <iostream>
 using namespace std;
 
+#pragma region Point
+class Point
+{
+private:
+	int x;
+	int y;
+public:
+	Point() :x{ 0 }, y{ 0 } {}
+	Point(int x, int y) : x{ x }, y{ y } {}
+	void print() const { cout << x << " " << y << endl; }
+	Point& operator*(int n)
+	{
+		this->x = this->x * n;
+		this->y = this->y * n;
+		return *this;
+	}
+	Point operator+(const Point& obj)
+	{
+		Point p{ this->x + obj.x, this->y + obj.y };
+		return p;
+	}
+	Point operator+(int n)
+	{
+		Point p{ this->x + n, this->y + n };
+		return p;
+	}
+	friend Point operator+(int n, const Point& obj);
+	Point& operator-()
+	{
+		this->x *= -1;
+		this->y *= -1;
+		return *this;
+	}
+	//friend void operator-(Point& p);
+	void setX(int x)
+	{
+		this->x = x;
+	}
+	void setY(int y)
+	{
+		this->y = y;
+	}
+	int getX() const
+	{
+		return x;
+	}
+	int getY() const
+	{
+		return y;
+	}
 
+	Point& operator++(int) //Postfix
+	{
+		Point p{ this->x, this->y };
+		this->x++;
+		this->y++;
+		return p;
+	}
+	Point& operator++() //Prefix
+	{
+		this->x++;
+		this->y++;
+		return *this;
+	}
+
+};
+
+Point operator+(int n, const Point& obj)
+{
+	Point p{ obj.x + n, obj.y + n };
+	return p;
+}
+//void operator-(Point& p)
+//{
+//	p.x *= -1;
+//	p.y *= -1;
+//}
+ostream& operator<<(ostream& out, const Point& p)
+{
+	out << p.getX() << " " << p.getY() << endl;
+	return out;
+}
+istream& operator>>(istream& in, Point& p)
+{
+	int x, y;
+	in >> x;
+	in >> y;
+	p.setX(x);
+	p.setY(y);
+	return in;
+}
+#pragma endregion
+
+//void create(MyArray arr) 
+//{
+//	arr.print();
+//}
+//MyArray createObj(int n)
+//{
+//	MyArray ma{static_cast<unsigned int>(n)};
+//	return ma;
+//}
 class MyArray
 {
 private:
@@ -81,117 +182,58 @@ public:
 		}	
 		return arr[index];
 	}
+
+	MyArray& operator=(const MyArray& obj)
+	{
+		if (this==&obj)
+		{
+			return *this;
+		}
+		if (obj.size == 0 || obj.arr == nullptr)
+		{
+			delete[] this->arr;
+			this->arr = nullptr;
+			this->size = 0;
+			return *this;
+		}
+		if (this->arr != nullptr)
+		{
+			delete[] this->arr;
+			this->arr = nullptr;
+			this->size = 0;
+		}
+		this->arr = new int[obj.size];
+		for (int i = 0; i < obj.size; ++i)
+		{
+			this->arr[i] = obj.arr[i];
+		}
+		this->size = obj.size;
+		return *this;
+	}
 };
 
-//void create(MyArray arr) 
-//{
-//	arr.print();
-//}
-//MyArray createObj(int n)
-//{
-//	MyArray ma{static_cast<unsigned int>(n)};
-//	return ma;
-//}
 
 
-class Point
-{
-private:
-	int x;
-	int y;
-public:
-	Point() :x{ 0 }, y{ 0 } {}
-	Point(int x, int y) : x{ x }, y{ y } {}
-	void print() const { cout << x << " " << y << endl; }
-	Point& operator*(int n)
-	{
-		this->x = this->x * n;
-		this->y = this->y * n;
-		return *this;
-	}
-	Point operator+(const Point& obj)
-	{
-		Point p{ this->x + obj.x, this->y + obj.y };
-		return p;
-	}
-	Point operator+(int n)
-	{
-		Point p{ this->x + n, this->y + n };
-		return p;
-	}
-	friend Point operator+(int n, const Point& obj);
-	Point& operator-()
-	{
-		this->x *= -1;
-		this->y *= -1;
-		return *this;
-	}
-	//friend void operator-(Point& p);
-	void setX(int x)
-	{
-		this->x = x;
-	}
-	void setY(int y)
-	{
-		this->y = y;
-	}
-	int getX() const 
-	{
-		return x;
-	}
-	int getY() const 
-	{
-		return y;
-	}
 
-	Point& operator++(int) //Postfix
-	{
-		Point p{ this->x, this->y };
-		this->x++;
-		this->y++;
-		return p;
-	}
-	Point& operator++() //Prefix
-	{
-		this->x++;
-		this->y++;
-		return *this;
-	}
-
-};
-
-Point operator+(int n, const Point& obj)
-{
-	Point p{obj.x+n, obj.y+n};
-	return p;
-}
-//void operator-(Point& p)
-//{
-//	p.x *= -1;
-//	p.y *= -1;
-//}
-
-
-ostream& operator<<(ostream& out, const Point& p)
-{
-	out << p.getX() << " " << p.getY() << endl;
-	return out;
-}
-istream& operator>>(istream& in, Point& p)
-{
-	int x, y;
-	in >> x;
-	in >> y;
-	p.setX(x);
-	p.setY(y);
-	return in;
-}
 
 int main()
 {
-	Point p{ 2,4 };
-	cout << p++;  // 2,4
-	cout << p;
+	MyArray obj1{ 10 };
+	MyArray obj2{ 3 };
+	//obj1 = obj2; //поверхневе копіювання
+	obj1.print();
+	obj1 = obj2;
+	obj1.print();
+	//obj1.operator=(obj2);
+
+	//MyArray obj2 = obj1; //KK
+
+
+
+
+	//Point p{ 2,4 };
+	//cout << p++;  // 2,4
+	//cout << p;
 	//cout << ++p;
 	//cout << p; //3,5
 	//cout << ++p;
