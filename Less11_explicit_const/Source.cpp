@@ -2,6 +2,7 @@
 using namespace std;
 
 #pragma region Point
+
 class Point
 {
 private:
@@ -66,18 +67,23 @@ public:
 		return *this;
 	}
 
+	void operator()() //Функтор
+	{
+		//cout << *this;
+		cout << this->getX() << " " << this->getY() << endl;
+	}
+	void operator()(int n) //Функтор
+	{
+		Point p { this->getX() + n, this->y + n };
+		cout << p.getX() << " " << p.getY() << endl;
+	}
+
+	operator bool() const
+	{
+		return (this->x != 0 && this->y != 0);
+	}
 };
 
-Point operator+(int n, const Point& obj)
-{
-	Point p{ obj.x + n, obj.y + n };
-	return p;
-}
-//void operator-(Point& p)
-//{
-//	p.x *= -1;
-//	p.y *= -1;
-//}
 ostream& operator<<(ostream& out, const Point& p)
 {
 	out << p.getX() << " " << p.getY() << endl;
@@ -92,6 +98,17 @@ istream& operator>>(istream& in, Point& p)
 	p.setY(y);
 	return in;
 }
+Point operator+(int n, const Point& obj)
+{
+	Point p{ obj.x + n, obj.y + n };
+	return p;
+}
+//void operator-(Point& p)
+//{
+//	p.x *= -1;
+//	p.y *= -1;
+//}
+
 #pragma endregion
 
 //void create(MyArray arr) 
@@ -218,6 +235,21 @@ public:
 
 int main()
 {
+
+	Point p{0,7};
+
+	cout << static_cast<bool>(p);
+	/*p();
+	p(10);
+	cout << p;*/
+	return 0;
+
+	Point point;
+	Point point2;
+	point + point2; //Метод*, функція
+	point.operator+(point2);
+	2 + point2; //Функція
+	
 	MyArray obj1{ 10 };
 	MyArray obj2{ 3 };
 	//obj1 = obj2; //поверхневе копіювання
