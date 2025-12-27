@@ -235,9 +235,7 @@ public:
 
 int main()
 {
-
 	Point p{0,7};
-
 	cout << static_cast<bool>(p);
 	/*p();
 	p(10);
